@@ -1,0 +1,324 @@
+---
+title: "FinalProject"
+author: "Zefan Qian, Geven Liu"
+date: "2/24/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+```
+
+## Binomial Simulation
+
+```{r Binomial}
+## function to do one simulation replicate
+do_one_p <- function(n, p){
+  
+  # generate sample of size n from Binom(1,p)
+  x <- rbinom(n, size = 1, prob = p)
+  phat <- mean(x)
+  
+  # return results
+  return(phat)
+}
+
+kset <- c()
+
+for (i in 1:30){
+  k <- do_one_p(n = 20, p = 0.5)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:50){
+  k <- do_one_p(n = 20, p = 0.5)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:80){
+  k <- do_one_p(n = 20, p = 0.5)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:100){
+  k <- do_one_p(n = 20, p = 0.5)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:10000){
+  k <- do_one_p(n = 20, p = 0.5)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+```
+
+```{r}
+x <- seq(0, 50, by = 1)
+y <- dbinom(x, 50, 0.5)
+plot(x, y)
+```
+
+```{r}
+x <- seq(0, 20, by = 0.1)
+y <- dexp(x, rate = 1)
+plot(x, y)
+```
+
+
+
+## Uniform Simulation
+
+```{r}
+uniform_Plot <- function(a, b){
+  xvals <- data.frame(x = c(a, b)) #Range for x-values
+  
+  ggplot(data.frame(x = xvals), aes(x = x)) + xlim(c(a, b)) + ylim(0, 1/(b - a)) +
+    stat_function(fun = dunif, args = list(min = a, max = b), geom = "area", 
+                  fill = "green", alpha = 0.35) + 
+    stat_function(fun = dunif, args = list(min = a, max = b)) +
+    labs(x = "\n x", y = "f(x) \n", 
+         title = paste0("Uniform Distribution \n With Min = ", a, " & Max = ", b, " \n")) +
+    theme(plot.title = element_text(hjust = 0.5),
+          axis.title.x = element_text(face="bold", colour="blue", size = 12),
+          axis.title.y = element_text(face="bold", colour="blue", size = 12)) +
+    geom_vline(xintercept = a, linetype = "dashed", colour = "red") +
+    geom_vline(xintercept = b, linetype = "dashed", colour = "red")
+  
+}
+
+uniform_Plot(a = 1, b = 8)
+```
+
+
+```{r Uniform}
+## function to do one simulation replicate
+do_one_p <- function(n, theta){
+  
+  # generate sample of size n from Binom(1,p)
+  x <- runif(n, min = 1, max = theta)
+  phat <- mean(x)
+  
+  # return results
+  return(phat)
+}
+
+kset <- c()
+
+for (i in 1:30){
+  k <- do_one_p(n = 10, theta = 8)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:50){
+  k <- do_one_p(n = 10, theta = 8)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:80){
+  k <- do_one_p(n = 10, theta = 8)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:100){
+  k <- do_one_p(n = 10, theta = 8)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:10000){
+  k <- do_one_p(n = 10, theta = 8)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+```
+
+
+## Exponential Simulation
+
+```{r Exponential}
+## function to do one simulation replicate
+do_one_p <- function(n, theta){
+  
+  # generate sample of size n from Binom(1,p)
+  x <- rexp(n, rate = 1)
+  phat <- mean(x)
+  
+  # return results
+  return(phat)
+}
+
+kset <- c()
+
+for (i in 1:30){
+  k <- do_one_p(n = 50, theta = 8)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:50){
+  k <- do_one_p(n = 50, theta = 8)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:80){
+  k <- do_one_p(n = 50, theta = 8)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:100){
+  k <- do_one_p(n = 50, theta = 8)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+kset <- c()
+
+for (i in 1:10000){
+  k <- do_one_p(n = 50, theta = 8)
+  kset <- c(kset, k)
+}
+
+k.data <- data.frame(kset)
+
+k.data %>%
+  ggplot(aes(x = kset)) + 
+  geom_histogram(binwidth = 0.05, fill = "steelblue") +
+  labs(x = 'Sample Mean', y = 'Counts') +
+  theme_classic()
+
+```
+
+
